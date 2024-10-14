@@ -32,13 +32,27 @@ const editRecipeSlice = createSlice({
         }),
       };
     },
+    setEditRecipeInstructions: (
+      state: RecipeState,
+      action: PayloadAction<string>
+    ) => {
+      return {
+        ...state,
+        instructions: action.payload,
+      };
+    },
     unsetEditRecipe: (__state: RecipeState) => {
       return initialState;
     },
   },
 });
 
-export const { setEditRecipe, setEditRecipeIngredientQty, unsetEditRecipe } =
+export const { 
+  setEditRecipe, 
+  setEditRecipeIngredientQty, 
+  setEditRecipeInstructions, 
+  unsetEditRecipe 
+} = 
   editRecipeSlice.actions;
 
 export default editRecipeSlice.reducer;

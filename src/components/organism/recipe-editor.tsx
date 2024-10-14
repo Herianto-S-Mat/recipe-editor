@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import { RootState } from '@models/store';
 import { removeDrinkRecipe, saveDrinkRecipe } from '@models/store/reducers/drinksRecipeSlice';
-import { setEditRecipe, unsetEditRecipe, setEditRecipeIngredientQty } from '@models/store/reducers/editRecipeSlice';
+import { setEditRecipe, unsetEditRecipe, setEditRecipeIngredientQty, setEditRecipeInstructions } from '@models/store/reducers/editRecipeSlice';
 import { RecipeState } from '@models/type';
 import { Alert, Button, ButtonGroup, Stack, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,16 +33,10 @@ const RecipeEditor = () => {
     const fetchError: string | null = useSelector((state: RootState) => state.error.fetchError)
     const recipeInDrinks: boolean = !!drinksRecipe.find((drinkRecipe) => drinkRecipe.name === recipe.name)
 
-    // const [filter, setFilter] = useState({
-    //     drink: '',
-    //     ingredient_name: '',
-    //     ingredient_qty: null,
-    //     total_qty: null,
-    // })
 
     const save = () => {
         dispatch(saveDrinkRecipe(recipe))
-        dispatch(unsetEditRecipe())
+        // dispatch(unsetEditRecipe())
     }
     const remove = () => {
         dispatch(removeDrinkRecipe(recipe))
@@ -50,7 +44,6 @@ const RecipeEditor = () => {
     }
     const reset = () => {
         if (recipeInDrinks) {
-            // const lastRecipeSaved = drinksRecipe.filter((drinkRecipe) => drinkRecipe.name === recipe.name)[0]
             dispatch(setEditRecipe(drinksRecipe.filter((drinkRecipe) => drinkRecipe.name === recipe.name)[0]))
         }
         else {
@@ -115,7 +108,7 @@ const RecipeEditor = () => {
                             size='small'
                             value={recipe.instructions}
                             label="instructions"
-                            onChange={(e) =>  console.log(e.target.value)}
+                            onChange={(e) =>  dispatch(setEditRecipeInstructions(e.target.value))}
                         />
                     </Stack>
                 </>
